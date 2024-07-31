@@ -14,17 +14,17 @@ jobs:
       - name: Login to Docker Hub
         run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
       - name: Build Docker Image
-        run: docker build -t christopherpallo2000/cp-delete-category-service .
+        run: docker build -t christopherpallo2000/cp-delete-product-service .
       - name: Publish image to docker hub
-        run: docker push christopherpallo2000/cp-delete-category-service:latest   
+        run: docker push christopherpallo2000/cp-delete-product-service:latest   
 
   deploy: 
     needs: build
-    runs-on: category-delete    
+    runs-on: product-delete    
     steps:
       - name: Pull image from docker hub
-        run: docker pull christopherpallo2000/cp-delete-category-service:latest
+        run: docker pull christopherpallo2000/cp-delete-product-service:latest
       - name: Delete Old Container
-        run: docker rm -f deleteCategoryService || true
+        run: docker rm -f deleteproductService || true
       - name: Run docker container
-        run: docker run -d --name deleteCategoryService -p 8089:8089 christopherpallo2000/cp-delete-category-service
+        run: docker run -d --name deleteproductService -p 8093:8093 christopherpallo2000/cp-delete-product-service
